@@ -1,15 +1,26 @@
-﻿using System;
+﻿/* File: YoYo.cs
+ * Project: Business Intelligence Assignment 02
+ * Author: Jamie Tran
+ * Description: This file in the initializer for the forms page and contains all the business logic for displaying, and updating the metrics/graph on the page
+ */
+
+using System;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 using DevExpress.XtraCharts;
-using Timer = System.Windows.Forms.Timer;
 
 namespace YoYo
 {
+
+    /// <summary>
+    /// YoYo class that inherits a form acting as the main page
+    /// </summary>
     public partial class YoYo : Form
     {
-        // maybe get this from db?
+
+        /// <summary>
+        /// The constant product Ids hard coded
+        /// </summary>
         private readonly string[] _productIds =
         {
             "OriginalSleeper",
@@ -22,50 +33,73 @@ namespace YoYo
             "WhiteLightning"
         };
 
+        /// <summary>
+        /// the DB reader
+        /// </summary>
         private readonly DbReader _yoyoConnection = new DbReader();
-        private static System.Timers.Timer refreshTimer;
 
+        /// <summary>
+        /// constructor
+        /// </summary>
         public YoYo()
         {
             InitializeComponent();
             PopulateProductCb();
-            RefreshPage();
-
-            // trying to get refreshing to work async
-            //refreshTimer = new System.Timers.Timer(5000);
-            //refreshTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            //refreshTimer.Enabled = true;
+            SetupChart();
+            UpdateMetrics();
         }
 
+        /// <summary>
+        /// this method populates the 
+        /// </summary>
         public void PopulateProductCb()
         {
             foreach (var productId in _productIds) ProductCb.Items.Add(productId);
             ProductCb.SelectedIndex = 0;
         }
 
+        /* Function: SetupChart()
+         * return : void
+         * input : vooid
+         * description: populates the chart with the data from the database
+         */
         public void SetupChart()
         {
             var failures = _yoyoConnection.GetReasons();
-            int totalFails = 0;
+            
+
+            int selectedIndex = ProductCb.SelectedIndex;
+            paretoChart.Titles[0].Text = selectedIndex == 0 ? $@"Reasons For Rejection (All)" : $@"Reasons For Rejection ({_productIds[selectedIndex-1]})";
+
             foreach (var failure in failures)
             { 
                 if (!string.IsNullOrEmpty(failure))
                 {
                     int failureCount = _yoyoConnection.GetFailureCount(failure, ProductCb.SelectedIndex);
-                    totalFails += failureCount;
                     paretoChart.Series[0].Points.Add(new SeriesPoint(failure, failureCount));
+
+                }
+            }
+
+            int totalFails = 0;
+            foreach (var failure in failures)
+            {
+                if (!string.IsNullOrEmpty(failure))
+                {
+                    int failureCount = _yoyoConnection.GetFailureCount(failure, ProductCb.SelectedIndex);
+                    totalFails += failureCount;
 
                     paretoChart.Series[1].Points.Add(new SeriesPoint(failure, totalFails));
                 }
             }
         }
 
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            RefreshPage();
-        }
-
-        private void RefreshPage()
+        /* Function: ProductCB_SelectedIndexChanged()
+         * return : void
+         * input : object sender, EventArgs e
+         * description: refreshes the screen when combo box changed
+         */
+        private void ProductCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateMetrics();
             paretoChart.Series[0].Points.Clear();
@@ -73,11 +107,11 @@ namespace YoYo
             SetupChart();
         }
 
-        private void ProductCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            RefreshPage();
-        }
-
+        /* Function: UpdateMetrics()
+         * return : void
+         * input : void
+         * description: updates all the labels on the page
+         */
         private void UpdateMetrics()
         {
             double moldsTotal = _yoyoConnection.GetNumberOfPartsByState(ProductCb.SelectedIndex, "Mold");
@@ -109,5 +143,20 @@ namespace YoYo
 
             packageYieldLabel.Text = $@"{packageYield:0.00}%";
         }
+
+        /* Function: Refresh_Click()
+        * return : void
+        * input : object sender, EventArgs e
+        * description: refreshes the screen when refresh is pressed
+        */
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            UpdateMetrics();
+            paretoChart.Series[0].Points.Clear();
+            paretoChart.Series[1].Points.Clear();
+            SetupChart();
+        }
     }
+
+
 }

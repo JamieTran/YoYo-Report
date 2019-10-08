@@ -1,14 +1,27 @@
-﻿using System;
+﻿/* File: DBReader.cs
+ * Project: Business Intelligence Assignment 02
+ * Author: Jamie Tran
+ * Description: This file contains all the logic that queries from the database
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
 namespace YoYo
 {
+    /// <summary>
+    /// DbReader contains all the logic that communicates and establishes a connection with the sql server
+    /// </summary>
     public class DbReader
     {
         private readonly SqlConnection _sqlConnection;
 
+        /// <summary>
+        /// Constructor
+        /// On initalization establish connection with sql server
+        /// </summary>
         public DbReader()
         {
             try
@@ -25,6 +38,12 @@ namespace YoYo
             }
         }
 
+        /// <summary>
+        /// gets the number of parts by state
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public int GetNumberOfPartsByState(int productId, string state)
         {
             int moldedParts;
@@ -58,6 +77,12 @@ namespace YoYo
             return moldedParts;
         }
 
+        /// <summary>
+        /// gets the number of parts that didnt fail
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public int GetNumberOfSuccessParts(int productId, string state)
         {
             int successParts;
@@ -92,8 +117,14 @@ namespace YoYo
             return successParts;
         }
 
+
         // Use the DevExpress Chart control to display a Pareto diagram showing the reasons for
         // rejection(rework and scrap combined).
+
+        /// <summary>
+        /// gets the list of reasons of failure from db
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetReasons()
         {
             var reasons = new List<string>();
@@ -119,6 +150,12 @@ namespace YoYo
             return reasons;
         }
 
+        /// <summary>
+        /// gets the number of failures based on product id
+        /// </summary>
+        /// <param name="reason"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public int GetFailureCount(string reason, int productId)
         {
             int numFailures;

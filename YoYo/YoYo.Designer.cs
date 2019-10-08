@@ -61,6 +61,7 @@
             this.assemblySuccessLabel = new System.Windows.Forms.Label();
             this.assemblyTotalLabel = new System.Windows.Forms.Label();
             this.packageYieldLabel = new System.Windows.Forms.Label();
+            this.Refresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.paretoChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(secondaryAxisY1)).BeginInit();
@@ -79,10 +80,19 @@
             xyDiagram1.AxisY.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
             xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
             secondaryAxisY1.AxisID = 0;
+            secondaryAxisY1.Label.TextPattern = "{V}";
             secondaryAxisY1.Name = "Failure Percentage";
             secondaryAxisY1.Title.Text = "Failure Percentage";
             secondaryAxisY1.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
             secondaryAxisY1.VisibleInPanesSerializable = "-1";
+            secondaryAxisY1.VisualRange.Auto = false;
+            secondaryAxisY1.VisualRange.MaxValueSerializable = "100";
+            secondaryAxisY1.VisualRange.MinValueSerializable = "0";
+            secondaryAxisY1.WholeRange.Auto = false;
+            secondaryAxisY1.WholeRange.AutoSideMargins = false;
+            secondaryAxisY1.WholeRange.MaxValueSerializable = "100";
+            secondaryAxisY1.WholeRange.MinValueSerializable = "0";
+            secondaryAxisY1.WholeRange.SideMarginsValue = 0D;
             xyDiagram1.SecondaryAxesY.AddRange(new DevExpress.XtraCharts.SecondaryAxisY[] {
             secondaryAxisY1});
             this.paretoChart.Diagram = xyDiagram1;
@@ -91,7 +101,7 @@
             this.paretoChart.Name = "paretoChart";
             series1.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
             series1.Name = "Failures";
-            series1.SeriesPointsSorting = DevExpress.XtraCharts.SortingMode.Ascending;
+            series1.SeriesPointsSorting = DevExpress.XtraCharts.SortingMode.Descending;
             series1.SeriesPointsSortingKey = DevExpress.XtraCharts.SeriesPointKey.Value_1;
             series1.ValueDataMembersSerializable = "5";
             series2.Name = "Cumulative Percentage";
@@ -112,7 +122,7 @@
             this.ProductCb.FormattingEnabled = true;
             this.ProductCb.Items.AddRange(new object[] {
             "All"});
-            this.ProductCb.Location = new System.Drawing.Point(88, 46);
+            this.ProductCb.Location = new System.Drawing.Point(88, 21);
             this.ProductCb.Name = "ProductCb";
             this.ProductCb.Size = new System.Drawing.Size(121, 21);
             this.ProductCb.TabIndex = 9;
@@ -121,7 +131,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 49);
+            this.label2.Location = new System.Drawing.Point(24, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 10;
@@ -347,11 +357,22 @@
             this.packageYieldLabel.TabIndex = 37;
             this.packageYieldLabel.Text = "0";
             // 
+            // Refresh
+            // 
+            this.Refresh.Location = new System.Drawing.Point(76, 61);
+            this.Refresh.Name = "Refresh";
+            this.Refresh.Size = new System.Drawing.Size(75, 23);
+            this.Refresh.TabIndex = 38;
+            this.Refresh.Text = "Refresh";
+            this.Refresh.UseVisualStyleBackColor = true;
+            this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
+            // 
             // YoYo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(978, 538);
+            this.Controls.Add(this.Refresh);
             this.Controls.Add(this.packageYieldLabel);
             this.Controls.Add(this.assemblyYieldLabel);
             this.Controls.Add(this.assemblySuccessLabel);
@@ -420,6 +441,7 @@
         private System.Windows.Forms.Label assemblySuccessLabel;
         private System.Windows.Forms.Label assemblyTotalLabel;
         private System.Windows.Forms.Label packageYieldLabel;
+        private System.Windows.Forms.Button Refresh;
     }
 }
 
