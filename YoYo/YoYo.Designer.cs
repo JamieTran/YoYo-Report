@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
+            DevExpress.XtraCharts.SecondaryAxisY secondaryAxisY1 = new DevExpress.XtraCharts.SecondaryAxisY();
             DevExpress.XtraCharts.Series series1 = new DevExpress.XtraCharts.Series();
             DevExpress.XtraCharts.Series series2 = new DevExpress.XtraCharts.Series();
             DevExpress.XtraCharts.LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
             DevExpress.XtraCharts.ChartTitle chartTitle1 = new DevExpress.XtraCharts.ChartTitle();
-            this.MessageQueueTB = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
+            this.paretoChart = new DevExpress.XtraCharts.ChartControl();
             this.ProductCb = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -62,30 +61,15 @@
             this.assemblySuccessLabel = new System.Windows.Forms.Label();
             this.assemblyTotalLabel = new System.Windows.Forms.Label();
             this.packageYieldLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paretoChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(secondaryAxisY1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(series1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(series2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(lineSeriesView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // MessageQueueTB
-            // 
-            this.MessageQueueTB.Location = new System.Drawing.Point(163, 24);
-            this.MessageQueueTB.Name = "MessageQueueTB";
-            this.MessageQueueTB.Size = new System.Drawing.Size(173, 20);
-            this.MessageQueueTB.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Message Queue Server";
-            // 
-            // chartControl1
+            // paretoChart
             // 
             xyDiagram1.AxisX.Title.Text = "Types of Failures";
             xyDiagram1.AxisX.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
@@ -94,20 +78,33 @@
             xyDiagram1.AxisY.Title.Text = "Frequency";
             xyDiagram1.AxisY.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
             xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram1;
-            this.chartControl1.Legend.Name = "Default Legend";
-            this.chartControl1.Location = new System.Drawing.Point(239, 120);
-            this.chartControl1.Name = "chartControl1";
-            series1.Name = "Series 1";
-            series2.Name = "Series 2";
+            secondaryAxisY1.AxisID = 0;
+            secondaryAxisY1.Name = "Failure Percentage";
+            secondaryAxisY1.Title.Text = "Failure Percentage";
+            secondaryAxisY1.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
+            secondaryAxisY1.VisibleInPanesSerializable = "-1";
+            xyDiagram1.SecondaryAxesY.AddRange(new DevExpress.XtraCharts.SecondaryAxisY[] {
+            secondaryAxisY1});
+            this.paretoChart.Diagram = xyDiagram1;
+            this.paretoChart.Legend.Name = "Default Legend";
+            this.paretoChart.Location = new System.Drawing.Point(237, 22);
+            this.paretoChart.Name = "paretoChart";
+            series1.LabelsVisibility = DevExpress.Utils.DefaultBoolean.False;
+            series1.Name = "Failures";
+            series1.SeriesPointsSorting = DevExpress.XtraCharts.SortingMode.Ascending;
+            series1.SeriesPointsSortingKey = DevExpress.XtraCharts.SeriesPointKey.Value_1;
+            series1.ValueDataMembersSerializable = "5";
+            series2.Name = "Cumulative Percentage";
+            series2.SeriesPointsSorting = DevExpress.XtraCharts.SortingMode.Ascending;
+            series2.SeriesPointsSortingKey = DevExpress.XtraCharts.SeriesPointKey.Value_1;
             series2.View = lineSeriesView1;
-            this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
+            this.paretoChart.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1,
         series2};
-            this.chartControl1.Size = new System.Drawing.Size(574, 401);
-            this.chartControl1.TabIndex = 8;
+            this.paretoChart.Size = new System.Drawing.Size(729, 504);
+            this.paretoChart.TabIndex = 8;
             chartTitle1.Text = "Reasons for Rejection";
-            this.chartControl1.Titles.AddRange(new DevExpress.XtraCharts.ChartTitle[] {
+            this.paretoChart.Titles.AddRange(new DevExpress.XtraCharts.ChartTitle[] {
             chartTitle1});
             // 
             // ProductCb
@@ -115,7 +112,7 @@
             this.ProductCb.FormattingEnabled = true;
             this.ProductCb.Items.AddRange(new object[] {
             "All"});
-            this.ProductCb.Location = new System.Drawing.Point(163, 63);
+            this.ProductCb.Location = new System.Drawing.Point(88, 46);
             this.ProductCb.Name = "ProductCb";
             this.ProductCb.Size = new System.Drawing.Size(121, 21);
             this.ProductCb.TabIndex = 9;
@@ -124,7 +121,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(99, 66);
+            this.label2.Location = new System.Drawing.Point(24, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 10;
@@ -133,7 +130,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 131);
+            this.label3.Location = new System.Drawing.Point(37, 131);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 11;
@@ -142,7 +139,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 157);
+            this.label4.Location = new System.Drawing.Point(37, 157);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 12;
@@ -151,7 +148,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 184);
+            this.label5.Location = new System.Drawing.Point(37, 184);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 13);
             this.label5.TabIndex = 13;
@@ -160,7 +157,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(23, 294);
+            this.label6.Location = new System.Drawing.Point(36, 294);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(36, 13);
             this.label6.TabIndex = 16;
@@ -169,7 +166,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(23, 267);
+            this.label7.Location = new System.Drawing.Point(36, 267);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 13);
             this.label7.TabIndex = 15;
@@ -178,7 +175,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(23, 241);
+            this.label8.Location = new System.Drawing.Point(36, 241);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 13);
             this.label8.TabIndex = 14;
@@ -188,7 +185,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(81, 104);
+            this.label12.Location = new System.Drawing.Point(94, 104);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(56, 20);
             this.label12.TabIndex = 20;
@@ -198,7 +195,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(81, 214);
+            this.label13.Location = new System.Drawing.Point(94, 214);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 20);
             this.label13.TabIndex = 21;
@@ -208,7 +205,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(59, 332);
+            this.label9.Location = new System.Drawing.Point(72, 332);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(85, 20);
             this.label9.TabIndex = 25;
@@ -217,7 +214,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(21, 410);
+            this.label10.Location = new System.Drawing.Point(34, 410);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(36, 13);
             this.label10.TabIndex = 24;
@@ -226,7 +223,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(21, 383);
+            this.label11.Location = new System.Drawing.Point(34, 383);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(65, 13);
             this.label11.TabIndex = 23;
@@ -235,7 +232,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(21, 357);
+            this.label14.Location = new System.Drawing.Point(34, 357);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(37, 13);
             this.label14.TabIndex = 22;
@@ -245,7 +242,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(59, 448);
+            this.label15.Location = new System.Drawing.Point(72, 448);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(78, 20);
             this.label15.TabIndex = 27;
@@ -254,7 +251,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(21, 488);
+            this.label16.Location = new System.Drawing.Point(34, 488);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(36, 13);
             this.label16.TabIndex = 26;
@@ -263,7 +260,7 @@
             // moldsTotalLabel
             // 
             this.moldsTotalLabel.AutoSize = true;
-            this.moldsTotalLabel.Location = new System.Drawing.Point(94, 131);
+            this.moldsTotalLabel.Location = new System.Drawing.Point(107, 131);
             this.moldsTotalLabel.Name = "moldsTotalLabel";
             this.moldsTotalLabel.Size = new System.Drawing.Size(13, 13);
             this.moldsTotalLabel.TabIndex = 28;
@@ -272,7 +269,7 @@
             // moldsSuccessLabel
             // 
             this.moldsSuccessLabel.AutoSize = true;
-            this.moldsSuccessLabel.Location = new System.Drawing.Point(94, 157);
+            this.moldsSuccessLabel.Location = new System.Drawing.Point(107, 157);
             this.moldsSuccessLabel.Name = "moldsSuccessLabel";
             this.moldsSuccessLabel.Size = new System.Drawing.Size(13, 13);
             this.moldsSuccessLabel.TabIndex = 29;
@@ -281,7 +278,7 @@
             // moldsYieldLabel
             // 
             this.moldsYieldLabel.AutoSize = true;
-            this.moldsYieldLabel.Location = new System.Drawing.Point(94, 184);
+            this.moldsYieldLabel.Location = new System.Drawing.Point(107, 184);
             this.moldsYieldLabel.Name = "moldsYieldLabel";
             this.moldsYieldLabel.Size = new System.Drawing.Size(13, 13);
             this.moldsYieldLabel.TabIndex = 30;
@@ -290,7 +287,7 @@
             // paintYieldLabel
             // 
             this.paintYieldLabel.AutoSize = true;
-            this.paintYieldLabel.Location = new System.Drawing.Point(94, 294);
+            this.paintYieldLabel.Location = new System.Drawing.Point(107, 294);
             this.paintYieldLabel.Name = "paintYieldLabel";
             this.paintYieldLabel.Size = new System.Drawing.Size(13, 13);
             this.paintYieldLabel.TabIndex = 33;
@@ -299,7 +296,7 @@
             // paintSuccessLabel
             // 
             this.paintSuccessLabel.AutoSize = true;
-            this.paintSuccessLabel.Location = new System.Drawing.Point(94, 267);
+            this.paintSuccessLabel.Location = new System.Drawing.Point(107, 267);
             this.paintSuccessLabel.Name = "paintSuccessLabel";
             this.paintSuccessLabel.Size = new System.Drawing.Size(13, 13);
             this.paintSuccessLabel.TabIndex = 32;
@@ -308,7 +305,7 @@
             // paintTotalLabel
             // 
             this.paintTotalLabel.AutoSize = true;
-            this.paintTotalLabel.Location = new System.Drawing.Point(94, 241);
+            this.paintTotalLabel.Location = new System.Drawing.Point(107, 241);
             this.paintTotalLabel.Name = "paintTotalLabel";
             this.paintTotalLabel.Size = new System.Drawing.Size(13, 13);
             this.paintTotalLabel.TabIndex = 31;
@@ -317,7 +314,7 @@
             // assemblyYieldLabel
             // 
             this.assemblyYieldLabel.AutoSize = true;
-            this.assemblyYieldLabel.Location = new System.Drawing.Point(94, 410);
+            this.assemblyYieldLabel.Location = new System.Drawing.Point(107, 410);
             this.assemblyYieldLabel.Name = "assemblyYieldLabel";
             this.assemblyYieldLabel.Size = new System.Drawing.Size(13, 13);
             this.assemblyYieldLabel.TabIndex = 36;
@@ -326,7 +323,7 @@
             // assemblySuccessLabel
             // 
             this.assemblySuccessLabel.AutoSize = true;
-            this.assemblySuccessLabel.Location = new System.Drawing.Point(94, 383);
+            this.assemblySuccessLabel.Location = new System.Drawing.Point(107, 383);
             this.assemblySuccessLabel.Name = "assemblySuccessLabel";
             this.assemblySuccessLabel.Size = new System.Drawing.Size(13, 13);
             this.assemblySuccessLabel.TabIndex = 35;
@@ -335,7 +332,7 @@
             // assemblyTotalLabel
             // 
             this.assemblyTotalLabel.AutoSize = true;
-            this.assemblyTotalLabel.Location = new System.Drawing.Point(94, 357);
+            this.assemblyTotalLabel.Location = new System.Drawing.Point(107, 357);
             this.assemblyTotalLabel.Name = "assemblyTotalLabel";
             this.assemblyTotalLabel.Size = new System.Drawing.Size(13, 13);
             this.assemblyTotalLabel.TabIndex = 34;
@@ -344,7 +341,7 @@
             // packageYieldLabel
             // 
             this.packageYieldLabel.AutoSize = true;
-            this.packageYieldLabel.Location = new System.Drawing.Point(94, 488);
+            this.packageYieldLabel.Location = new System.Drawing.Point(107, 488);
             this.packageYieldLabel.Name = "packageYieldLabel";
             this.packageYieldLabel.Size = new System.Drawing.Size(13, 13);
             this.packageYieldLabel.TabIndex = 37;
@@ -354,7 +351,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 533);
+            this.ClientSize = new System.Drawing.Size(978, 538);
             this.Controls.Add(this.packageYieldLabel);
             this.Controls.Add(this.assemblyYieldLabel);
             this.Controls.Add(this.assemblySuccessLabel);
@@ -381,26 +378,22 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ProductCb);
-            this.Controls.Add(this.chartControl1);
-            this.Controls.Add(this.MessageQueueTB);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.paretoChart);
             this.Name = "YoYo";
             this.Text = "YoYo";
+            ((System.ComponentModel.ISupportInitialize)(secondaryAxisY1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(series1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(lineSeriesView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(series2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paretoChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox MessageQueueTB;
-        private System.Windows.Forms.Label label1;
-        private DevExpress.XtraCharts.ChartControl chartControl1;
+        private DevExpress.XtraCharts.ChartControl paretoChart;
         private System.Windows.Forms.ComboBox ProductCb;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
