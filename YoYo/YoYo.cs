@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraCharts;
@@ -65,6 +66,9 @@ namespace YoYo
          */
         public void SetupChart()
         {
+
+            paretoChart.Series[0].Points.Clear();
+            paretoChart.Series[1].Points.Clear();
             var failures = _yoyoConnection.GetReasons();
             
 
@@ -81,16 +85,15 @@ namespace YoYo
                 }
             }
 
-            int totalFails = 0;
-            foreach (var failure in failures)
-            {
-                if (!string.IsNullOrEmpty(failure))
-                {
-                    int failureCount = _yoyoConnection.GetFailureCount(failure, ProductCb.SelectedIndex);
-                    totalFails += failureCount;
+            var seriesList = paretoChart.Series[0].Points.ToList();
+            var sortedlist = seriesList.OrderByDescending(s => s.UserValues[0]);
 
-                    paretoChart.Series[1].Points.Add(new SeriesPoint(failure, totalFails));
-                }
+            double totalFails = 0;
+            foreach (SeriesPoint failure in sortedlist)
+            {
+                totalFails += failure.Values[0];
+
+                paretoChart.Series[1].Points.Add(new SeriesPoint(failure.Argument, totalFails));
             }
         }
 

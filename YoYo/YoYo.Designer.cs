@@ -86,11 +86,13 @@
             secondaryAxisY1.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
             secondaryAxisY1.VisibleInPanesSerializable = "-1";
             secondaryAxisY1.VisualRange.Auto = false;
+            secondaryAxisY1.VisualRange.AutoSideMargins = false;
             secondaryAxisY1.VisualRange.MaxValueSerializable = "100";
             secondaryAxisY1.VisualRange.MinValueSerializable = "0";
+            secondaryAxisY1.VisualRange.SideMarginsValue = 0D;
             secondaryAxisY1.WholeRange.Auto = false;
             secondaryAxisY1.WholeRange.AutoSideMargins = false;
-            secondaryAxisY1.WholeRange.MaxValueSerializable = "100";
+            secondaryAxisY1.WholeRange.MaxValueSerializable = "110";
             secondaryAxisY1.WholeRange.MinValueSerializable = "0";
             secondaryAxisY1.WholeRange.SideMarginsValue = 0D;
             xyDiagram1.SecondaryAxesY.AddRange(new DevExpress.XtraCharts.SecondaryAxisY[] {
